@@ -1,0 +1,106 @@
+openapi: '3.0.1'
+info:
+  title: Routes
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: dutomazoni@gmail.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: '1.0'
+servers:
+  - url: http://localhost:5001
+tags:
+  - name: Price
+    description: Prices' routes.
+  - name: Plans
+    description: Plans' routes.
+
+
+paths:
+  /price:
+    get:
+      tags:
+        - Price
+      summary: Get the price requested.
+      description: Request shape - http://localhost:5001/price?origem=*ddd_origem*&destino=*ddd_destino*
+      operationId: getPrice
+      parameters:
+        - in: query
+          required: true
+          name: origem
+          schema:
+            type: string
+            example: "011"
+        - in: query
+          required: true
+          name: destino
+          schema:
+            type: string
+            example: "016"
+      responses:
+        200:
+          description: Returns the price for the operation.
+          content:
+            application/json:
+              examples:
+                getPrice:
+                  value:
+                    {
+                      "price": {
+                        "_id": "6116c9350b79a1cc81c586ac",
+                        "origem": "011",
+                        "destino": "016",
+                        "valor_min": "1.90"
+                      }
+                    }
+  /plan:
+    get:
+      tags:
+        - Plans
+      summary: Get the plan requested.
+      description: Request shape - http://localhost:5001/plan?nome=*name*
+      operationId: getPrice
+      parameters:
+        - in: query
+          required: true
+          name: nome
+          schema:
+            type: string
+            example: "FaleMais 30"
+      responses:
+        200:
+          description: Returns the plan.
+          content:
+            application/json:
+              examples:
+                getPrice:
+                  value:
+                    {
+                      "plan": {
+                        "_id": "6116e1150b79a1cc81c586ad",
+                        "nome": "FaleMais 30",
+                        "minutos": 30
+                      }
+                    }
+components:
+  schemas:
+    Price:
+      properties:
+        origem:
+          type: string
+          example: "011"
+        destino:
+          type: string
+          example: "016"
+        valor_min:
+          type: string
+          example: 1.90
+    Plan:
+      properties:
+        nome:
+          type: string
+          example: FaleMais 30
+        minutos:
+          type: number
+          example: 30
